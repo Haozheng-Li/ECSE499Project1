@@ -1,27 +1,36 @@
 %% 
-clear;clc;close all
+function TotalArea = MonteCarlo(ellipse_a, ellipse_b, circle_a, circle_b, circle_r)
+    f_ellipse = @(x,y) x.^2/ellipse_a^2 + y.^2/ellipse_b^2-1;
 
-a = 5;
-b = 2;
-f = @(x,y) x.^2/a^2 + y.^2/b^2-1;
-fimplicit(f, 'LineWidth',2);
+    fimplicit(f_ellipse, 'LineWidth',2);
+    hold on
+    rectangle('Position',[circle_a-circle_r,circle_b-circle_r,2*circle_r,2*circle_r],'Curvature',[1,1],'linewidth',1),axis equal
 
-set(gcf, 'units', 'normalized', 'position', [0.2 0.2 0.6 0.6]);
-grid on
-axis equal
-axis([-(a+0.5), (a+0.5), -(b+0.5), (b+0.5)]);
-pause(2)
-hold on
+    set(gcf, 'units', 'normalized', 'position', [0.2 0.2 0.6 0.6]);
+    grid on
+    pause(2)
+    hold on
 
-rectangle('Position', [-a, -b, 2*a, 2*b], 'EdgeColor', 'r', 'LineWidth', 2);
-A=4*a*b;
+    CircleArea=2*pi*circle_r^2;
+    N = 20000;
 
-N = 20000;
-xk=-a+(a+a)*rand(1,N);
-yk=-b+(b+b)*rand(1,N);
-scatter(xk, yk, 'g.');
+    theta=0:0.001:360;
+    Circle1=circle_a+circle_r*cos(theta);
+    Circle2=circle_b+circle_r*sin(theta);
+    plot(Circle1,Circle2,'r')
 
-r=xk.^2/a^2 + yk.^2/b^2-1;
-m=find(r<=1);
-n=length(m);
-S=(n/N)*A
+    r=circle_r*sqrt(rand(1,N));
+    seta=2*pi*rand(1,N);
+    xk=circle_a+r.*cos(seta);
+    yk=circle_b+r.*sin(seta);
+    hold on
+    scatter(xk,yk,'g.');
+
+    r = xk.^2/ellipse_a^2 + yk.^2/ellipse_b^2-1;
+    m = find(r<=0);
+    n = length(m);
+    
+    TotalArea=(n/N)*CircleArea;
+end
+
+
