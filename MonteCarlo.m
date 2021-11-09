@@ -1,4 +1,3 @@
-%% 
 function TotalArea = MonteCarlo(ellipse_a, ellipse_b, circle_a, circle_b, circle_r)
     f_ellipse = @(x,y) x.^2/ellipse_a^2 + y.^2/ellipse_b^2-1;
 
@@ -32,5 +31,3 @@ function TotalArea = MonteCarlo(ellipse_a, ellipse_b, circle_a, circle_b, circle
     
     TotalArea=(n/N)*CircleArea;
 end
-
-
