@@ -1,4 +1,4 @@
-function error_ellipse(covariance, meandata)
+function ab = error_ellipse(covariance, meandata)
 
     % Calculate the eigenvectors and eigenvalues
     [eigenvec, eigenval] = eig(covariance);
@@ -35,9 +35,11 @@ function error_ellipse(covariance, meandata)
     phi = angle;
     X0=avg(1);
     Y0=avg(2);
+    ab = [];
     a=chisquare_val*sqrt(largest_eigenval);
     b=chisquare_val*sqrt(smallest_eigenval);
-
+    ab(1) = a;
+    ab(2) = b;
     % the ellipse in x and y coordinates 
     ellipse_x_r  = a*cos( theta_grid );
     ellipse_y_r  = b*sin( theta_grid );

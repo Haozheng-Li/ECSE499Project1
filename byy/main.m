@@ -11,6 +11,11 @@ sigma_r = 0.1;
 sigma_phi = 0.09;
 figure(1);
 
+ rectangle('position',[3.8,2.2,0.5,0.5],'curvature',[1,1],'linewidth',1,'edgecolor','r'),axis equal
+ 
+ rectangle('position',[4.7,2,1,1],'curvature',[1,1],'linewidth',1,'edgecolor','r'),axis equal
+
+
 %% 1. Plot the localization uncertainties at each time step
 % subplot(2,2,1);
 % N = 1000;    % Suppose sample size is 1000
@@ -65,7 +70,8 @@ for i = 1:size(ut, 2)
     total_mu = [total_mu, mu];
     total_sigma = [total_sigma, sigma];
 %     error_ellipse(sigma, mu);
-    error_ellipse(sigma_t_hat, mu_t_hat);
+    ab = error_ellipse(sigma_t_hat, mu_t_hat);
+%     MonteCarlo(ab(1), ab(2), 3.8,2.2,0.5);
 end
 plot(total_mu(1,:),total_mu(2,:),'r', 'linewidth',2); %EKF Line
 hold on;
